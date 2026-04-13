@@ -107,8 +107,9 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
 
     # Genre match
     if song["genre"] == user_prefs["genre"]:
-        score += 2.0
-        reasons.append("genre match (+2.0)")
+        score += 1.0
+        reasons.append("genre match (+1.0)")
+
 
     # Mood match
     if song["mood"] == user_prefs["mood"]:
@@ -116,10 +117,9 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
         reasons.append("mood match (+1.0)")
 
     # Energy similarity
-    energy_score = 1 - abs(song["energy"] - user_prefs["energy"])
+    energy_score = 2 * (1 - abs(song["energy"] - user_prefs["energy"]))
     score += energy_score
     reasons.append(f"energy similarity (+{energy_score:.2f})")
-
     return score, reasons
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
