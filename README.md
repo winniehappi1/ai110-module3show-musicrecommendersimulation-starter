@@ -29,7 +29,54 @@ Some prompts to answer:
 
 You can include a simple diagram or bullet list if helpful.
 
+
+Each song in the system includes features such as genre, mood, energy, tempo_bpm, valence, danceability, and acousticness.
+
+The UserProfile stores information about a song the user likes, including its mood, energy, tempo, and valence. This represents the user’s taste.
+
+The recommender system calculates a score for each song by comparing it to the user’s preferred song. For categorical features like mood and genre, it uses similarity matching (exact or partial matches). For numerical features like energy, tempo, and valence, it calculates how close the values are using a distance-based formula.
+
+Each feature is assigned a weight based on importance. Mood is the most important because it defines the overall vibe of the song, followed by energy, valence, and tempo. Genre is less important.
+
+The final score is a weighted sum of all feature scores. After scoring all songs, the system ranks them from highest to lowest score and recommends the top songs to the user.
+
+### System Flow
+
+Input: UserProfile preferences + songs from songs.csv  
+↓  
+Process: Loop through each song and calculate a score based on genre match, mood match, energy similarity, and acoustic preference  
+↓  
+Ranking: Sort songs by score from highest to lowest  
+↓  
+Output: Return the top K recommended songs  
+### Algorithm Recipe
+
+My recommender uses a point-based scoring system to evaluate each song.
+
+- +2.0 points if the song’s genre matches the user’s favorite genre  
+- +1.0 point if the song’s mood matches the user’s favorite mood  
+- Adds similarity points based on how close the song’s energy is to the user’s target energy using the formula (1 - |song.energy - user.target_energy|)  
+- If the user prefers acoustic songs, it adds the song’s acousticness score  
+- Otherwise, it rewards songs with lower acousticness  
+
+After calculating scores for all songs, the system sorts them from highest to lowest score and recommends the top K songs.
+
 ---
+
+### Potential Biases
+
+This recommender system has some limitations and possible biases.
+
+- It may over-prioritize exact genre matches, even if a song has a very similar mood  
+- It only uses a small set of features and ignores important factors like lyrics or cultural context  
+- It assumes all users have simple preferences, which may not reflect real-world taste  
+- It may favor songs with certain feature values (like acousticness) depending on the user profile  
+
+Because of these limitations, the recommendations may not always feel accurate or diverse.
+---
+## CLI Output Example
+
+![Recommender Output](screenshot.png)
 
 ## Getting Started
 

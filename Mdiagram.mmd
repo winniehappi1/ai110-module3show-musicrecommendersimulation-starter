@@ -1,0 +1,21 @@
+flowchart TD
+    A[Input: UserProfile preferences]
+    B[Load songs from songs.csv]
+    C[Loop through each song]
+    D[Check genre match]
+    E[Check mood match]
+    F[Calculate energy similarity]
+    G[Check acoustic preference]
+    H[Calculate total score]
+    I[Sort songs by score]
+    J[Output top K recommendations]
+
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
